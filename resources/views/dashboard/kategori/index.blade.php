@@ -30,6 +30,11 @@
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
                                     <th scope="col" class="px-4 py-3">Nama</th>
+                                    <th scope="col" class="px-4 py-3">Kehadiran</th>
+                                    <th scope="col" class="px-4 py-3">Kontribusi</th>
+                                    <th scope="col" class="px-4 py-3">Disiplin</th>
+                                    <th scope="col" class="px-4 py-3">Kemampuan Memimpin</th>
+                                    <th scope="col" class="px-4 py-3">Sertifikasi</th>
                                     <th scope="col" class="px-4 py-3">Aksi</th>
                                 </tr>
                             </thead>
@@ -58,24 +63,58 @@
             <div class="modal">
                 <div class="modal-box">
                     <form action="{{ route('kategori.simpan') }}" method="post" enctype="multipart/form-data">
-                        <h3 class="font-bold text-lg">Tambah {{ $judul }}</h3>
-                            @csrf
-                            <div class="form-control w-full max-w-xs">
-                                <label class="label">
-                                    <span class="label-text">Nama</span>
-                                </label>
-                                <input type="text" name="nama" placeholder="Type here" class="input input-bordered w-full max-w-xs text-gray-800" value="{{ old('nama') }}" required />
-                                <label class="label">
-                                    @error('nama')
-                                        <span class="label-text-alt text-error">{{ $message }}</span>
-                                    @enderror
-                                </label>
-                            </div>
-                        <div class="modal-action">
+                        @csrf
+
+                        {{-- Input Nama 1 --}}
+                        <div class="form-control w-full max-w-xs">
+                            <label class="label">
+                                <span class="label-text">Nama</span>
+                            </label>
+                            <input type="text" name="nama" class="input input-bordered w-full max-w-xs text-gray-800"
+                                value="{{ old('nama') }}" required />
+                            <label class="label">
+                                @error('nama')
+                                    <span class="label-text-alt text-error">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
+
+                        @foreach ($kriteria as $item)
+                        <div class="form-control w-full max-w-xs mt-4">
+                            <label class="label">
+                                <span class="label-text">Nilai untuk Kriteria: {{ $item->nama }}</span>
+                            </label>
+                            <input 
+                                type="number" 
+                                name="nilai_kriteria[{{ $item->id }}]" 
+                                step="0.01" 
+                                min="0" 
+                                max="100"
+                                class="input input-bordered w-full max-w-xs text-gray-800"
+                                placeholder="Contoh: 85.50"
+                                value="{{ old('nilai_kriteria.' . $item->id) }}" 
+                                required
+                            />
+                            <label class="label">
+                                @error("nilai_kriteria.{$item->id}")
+                                    <span class="label-text-alt text-error">{{ $message }}</span>
+                                @enderror
+                            </label>
+
+                            <input 
+                                type="hidden" 
+                                name="bobot_kriteria[{{ $item->id }}]" 
+                                value="{{ $item->prioritas }}"
+                            />
+                        </div>
+                        @endforeach
+
+                        {{-- Tombol Submit --}}
+                        <div class="modal-action mt-6">
                             <button type="submit" class="btn btn-success">Simpan</button>
-                            <label for="add_button" class="btn">Batal</label>
                         </div>
                     </form>
+
                 </div>
                 <label class="modal-backdrop" for="add_button">Close</label>
             </div>

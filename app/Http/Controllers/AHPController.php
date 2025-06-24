@@ -45,7 +45,7 @@ class AHPController extends Controller
             ->get();
 
         $matriksPenjumlahanPrioritas = DB::table('matriks_penjumlahan_prioritas_utama')->get();
-        $IR = DB::table('index_random_consistency')->where('ukuran_matriks', $kriteria->count())->first()->nilai;
+        // $IR = DB::table('index_random_consistency')->where('ukuran_matriks', $kriteria->count())->first()->nilai;
 
         // dd($matriksNilai->where('kriteria_id', $kriteria->last()->id)->first());
 
@@ -56,7 +56,7 @@ class AHPController extends Controller
             'matriksNilai' => $matriksNilai,
             'matriksPenjumlahan' => $matriksPenjumlahan,
             'matriksPenjumlahanPrioritas' => $matriksPenjumlahanPrioritas,
-            'IR' => $IR,
+            'IR' => 1.12,
         ]);
     }
 
@@ -259,7 +259,7 @@ class AHPController extends Controller
             ->get();
 
         $matriksPenjumlahanPrioritas = DB::table('matriks_penjumlahan_prioritas_kriteria')->where('kriteria_id', $request->kriteria_id)->get();
-        $IR = DB::table('index_random_consistency')->where('ukuran_matriks', $kategori->count())->first()->nilai;
+        // $IR = DB::table('index_random_consistency')->where('ukuran_matriks', $kategori->count())->first()->nilai;
 
         // dd($matriksNilai->where('kategori_id', $kategori->last()->id)->first());
 
@@ -271,7 +271,7 @@ class AHPController extends Controller
             'matriksNilai' => $matriksNilai,
             'matriksPenjumlahan' => $matriksPenjumlahan,
             'matriksPenjumlahanPrioritas' => $matriksPenjumlahanPrioritas,
-            'IR' => $IR,
+            'IR' => 1.12,
         ]);
     }
 

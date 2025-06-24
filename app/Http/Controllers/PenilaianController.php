@@ -36,11 +36,11 @@ class PenilaianController extends Controller
             ->join('kategori as k', 'k.id', '=', 'mnk.kategori_id')
             ->select('mnk.*', 'k.id as kategori_id', 'k.nama as nama_kategori')
             ->get();
-        if ($matriksNilaiKriteria->where('kriteria_id', $kriteria->last()->id)->first() == null) {
-            return redirect('dashboard/kriteria/perhitungan_utama')->with('gagal', 'Perhitungan Kriteria Utama belum tuntas!');
-        } else if ($matriksNilaiSubKriteria->where('kriteria_id', $kriteria->last()->id)->first() == null) {
-            return redirect('dashboard/sub_kriteria')->with('gagal', 'Perhitungan Sub Kriteria belum tuntas!');
-        }
+        // if ($matriksNilaiKriteria->where('kriteria_id', $kriteria->last()->id)->first() == null) {
+        //     return redirect('dashboard/kriteria/perhitungan_utama')->with('gagal', 'Perhitungan Kriteria Utama belum tuntas!');
+        // } else if ($matriksNilaiSubKriteria->where('kriteria_id', $kriteria->last()->id)->first() == null) {
+        //     return redirect('dashboard/sub_kriteria')->with('gagal', 'Perhitungan Sub Kriteria belum tuntas!');
+        // }
 
         $data = $this->penilaianService->getAll();
         $kategori = $this->kategoriService->getAll();

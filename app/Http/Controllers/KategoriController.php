@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\KategoriRequest;
 use App\Http\Services\KategoriService;
+use App\Models\MatriksPenilaianAkhirAhp;
 use Illuminate\Http\Request;
 
 class KategoriController extends Controller
@@ -17,18 +19,32 @@ class KategoriController extends Controller
 
     public function index()
     {
-        $judul = "Kategori";
-        $data = $this->kategoriService->getAll();
+        $judul = "Data Calon";
+        $data = MatriksPenilaianAkhirAhp::all();
+        $matriksNilai = DB::table('matriks_nilai_prioritas_utama as nilai')
+            ->join('kriteria as k', 'nilai.kriteria_id', '=', 'k.id')
+            ->get();
 
         return view('dashboard.kategori.index', [
             "judul" => $judul,
             "data" => $data,
+            "kriteria" => $matriksNilai
         ]);
     }
 
     public function simpan(KategoriRequest $request)
     {
-        $data = $this->kategoriService->simpanPostData($request);
+        $bobot_kriteria = $request->input('bobot_kriteria');
+        dd($bobot_kriteria);
+        foreach($bobot_kriteria as $data) {
+            dd($data);
+        }
+
+        // $data = MatriksPenilaianAkhirAhp::create([
+        //     'nama' => $request->nama,
+        //     'kriteria_id' => $request->kriteria_id,
+        //     'nilai' => $request->nilai
+        // ]);
         if (!$data[0]) {
             return redirect('dashboard/kategori')->with('gagal', $data[1]);
         }

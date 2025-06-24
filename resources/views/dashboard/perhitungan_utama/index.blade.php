@@ -335,7 +335,7 @@
                                     <tr class="border-b dark:border-gray-700">
                                         <td class="px-4 py-3 text-gray-700 dark:text-gray-400 font-semibold">Nilai Consistency Ratio (CR) <span class="font-normal">(CI / IR)</span></td>
                                         <td class="px-4 py-3 text-gray-700 dark:text-gray-400 font-semibold">
-                                            @if ($CI2/$IR > 0 && $CI2/$IR < 0.1)
+                                            @if ($CI2/$IR > 0 && $CI2/$IR < 0.001)
                                                 <span class="text-success">
                                                     {{ round($CI2/$IR, 3) }}
                                                 </span>
