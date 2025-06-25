@@ -23,8 +23,6 @@ class KategoriRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            "nama" => "required|string|max:255",
-        ];
+        return [];
     }
 }

@@ -20,18 +20,21 @@ class DashboardController extends Controller
         $subKriteria = SubKriteria::get()->count();
         $alternatif = Alternatif::get();
 
-        $hasilSolusi = DB::table('hasil_solusi_ahp as hsa')
-            ->join('alternatif as a', 'a.id', '=', 'hsa.alternatif_id')
-            ->select('hsa.*', 'a.nama as nama_alternatif')
-            ->get();
+        // $hasilSolusi = DB::table('hasil_solusi_ahp as hsa')
+        //     ->join('alternatif as a', 'a.id', '=', 'hsa.alternatif_id')
+        //     ->select('hsa.*', 'a.nama as nama_alternatif')
+        //     ->get();
 
-        $hasilNilaiData = '';
-        foreach ($hasilSolusi as $item) {
-            $hasilNilaiData .= number_format($item->nilai, 3) . ", ";
-        }
-        $hasilNilaiData = rtrim($hasilNilaiData, ", ");
+        // $hasilNilaiData = '';
+        // foreach ($hasilSolusi as $item) {
+        //     $hasilNilaiData .= number_format($item->nilai, 3) . ", ";
+        // }
+        // $hasilNilaiData = rtrim($hasilNilaiData, ", ");
 
-        return view('dashboard.index', compact('judul', 'kriteria', 'kategori', 'subKriteria', 'alternatif', 'hasilSolusi', 'hasilNilaiData'));
+        return view('dashboard.index', compact('judul', 'kriteria', 'kategori', 'subKriteria', 'alternatif', 
+        // 'hasilSolusi', 
+        // 'hasilNilaiData'
+    ));
     }
 
     public function profile(Request $request)

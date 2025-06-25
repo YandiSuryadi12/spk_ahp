@@ -11,6 +11,7 @@ use App\Http\Controllers\AlternatifController;
 use App\Http\Controllers\SubKriteriaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\DataGuruController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,14 +72,25 @@ Route::group([
     });
 
     Route::group([
-        'prefix' => 'kategori'
+        'prefix' => 'dataguru'
     ], function () {
-        Route::get('/', [KategoriController::class, 'index'])->name('kategori');
-        Route::post('/simpan', [KategoriController::class, 'simpan'])->name('kategori.simpan');
-        Route::get('/ubah', [KategoriController::class, 'ubah'])->name('kategori.ubah');
-        Route::post('/ubah', [KategoriController::class, 'perbarui'])->name('kategori.perbarui');
-        Route::post('/hapus', [KategoriController::class, 'hapus'])->name('kategori.hapus');
-        Route::post('/import', [KategoriController::class, 'import'])->name('kategori.import');
+        Route::get('/', [DataGuruController::class, 'index'])->name('dataguru');
+        Route::post('/simpan', [DataGuruController::class, 'simpan'])->name('dataguru.simpan');
+        Route::get('/ubah', [DataGuruController::class, 'ubah'])->name('dataguru.ubah');
+        Route::post('/ubah', [DataGuruController::class, 'perbarui'])->name('dataguru.perbarui');
+        Route::post('/hapus', [DataGuruController::class, 'hapus'])->name('dataguru.hapus');
+        Route::post('/import', [DataGuruController::class, 'import'])->name('dataguru.import');
+    });
+
+    Route::group([
+        'prefix' => 'tambahnilaiguru'
+    ], function () {
+        Route::get('/', [KategoriController::class, 'index'])->name('tambahnilaiguru');
+        Route::post('/simpan', [KategoriController::class, 'simpan'])->name('tambahnilaiguru.simpan');
+        Route::get('/ubah', [KategoriController::class, 'ubah'])->name('tambahnilaiguru.ubah');
+        Route::post('/ubah', [KategoriController::class, 'perbarui'])->name('tambahnilaiguru.perbarui');
+        Route::post('/hapus', [KategoriController::class, 'hapus'])->name('tambahnilaiguru.hapus');
+        Route::post('/import', [KategoriController::class, 'import'])->name('tambahnilaiguru.import');
     });
 
     Route::group([

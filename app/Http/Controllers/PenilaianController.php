@@ -10,6 +10,8 @@ use App\Http\Services\KategoriService;
 use App\Http\Services\KriteriaService;
 use App\Http\Services\PenilaianService;
 use App\Http\Services\SubKriteriaService;
+use App\Models\MatriksPenilaianAkhirAhp;
+use App\Models\DataGuru;
 
 class PenilaianController extends Controller
 {
@@ -132,15 +134,60 @@ class PenilaianController extends Controller
 
     public function hasil_akhir()
     {
-        $judul = 'Hasil Akhir';
-        $hasil = DB::table('hasil_solusi_ahp as hsa')
-            ->join('alternatif as a', 'a.id', '=', 'hsa.alternatif_id')
-            ->select('hsa.*', 'a.nama as nama_alternatif')
-            ->orderBy('hsa.nilai', 'desc')
+
+        $judul = "Hasil Akhir";
+
+        $hasil = MatriksPenilaianAkhirAhp::with(['kriteria', 'guru'])->get();
+
+        $kriteriaList = $hasil
+            ->pluck('kriteria.nama')
+            ->unique()
+            ->sort()
+            ->values();
+
+        $data = [];
+
+        foreach ($hasil as $item) {
+            $nama = $item->guru->nama;
+            $kriteriaKey = $item->kriteria->nama;
+
+            if (!isset($data[$nama])) {
+                $data[$nama] = ['nama_pengguna' => $nama];
+            }
+
+            $data[$nama][$kriteriaKey] = $item->nilai;
+        }
+
+        $rows = array_values($data);
+        foreach ($rows as &$row) {
+            $nilai = array_filter($row, fn($val, $key) => $key !== 'nama_pengguna', ARRAY_FILTER_USE_BOTH);
+            $row['total_nilai'] = array_sum($nilai);
+        }
+        unset($row);
+
+        usort($rows, function ($a, $b) {
+            return $b['total_nilai'] <=> $a['total_nilai'];
+        });
+
+        foreach ($rows as $i => &$row) {
+            $row['ranking'] = $i + 1;
+        }
+        unset($row);
+
+        $calon = DataGuru::all();
+        $data = MatriksPenilaianAkhirAhp::all();
+        $matriksNilai = DB::table('matriks_nilai_prioritas_utama as nilai')
+            ->join('kriteria as k', 'nilai.kriteria_id', '=', 'k.id')
             ->get();
+
         return view('dashboard.penilaian.hasil', [
-            'judul' => $judul,
-            'hasil' => $hasil,
+            "judul" => $judul,
+            "data" => $data,
+            "calon" => $calon,
+            "kriteria" => $matriksNilai,
+            "kriteriaList" => $kriteriaList,
+            "rows" => $rows,
+            "result" => $rows
         ]);
     }
 
