@@ -228,72 +228,6 @@
                         @php
                             $jmlKriteria = $kriteria->count();
                         @endphp
-                        {{-- Cara Cek CR 1 --}}
-                        <div class="overflow-x-auto p-3 mt-3">
-                            <table id="tabel_data_matriks_penjumlahan" class="nowrap w-full text-sm text-left text-gray-500 dark:text-gray-400 stripe hover" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
-                                <caption class="mb-3 text-base">Consistency Ratio: Cara 1</caption>
-                                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                                    <tr>
-                                        <th scope="col" class="px-4 py-3">Keterangan</th>
-                                        <th scope="col" class="px-4 py-3">Nilai</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php
-                                        $lamdaMaks1 = $hasilRasio / $jmlKriteria;
-                                        $CI1 = ($lamdaMaks1 - $jmlKriteria) / $jmlKriteria;
-                                    @endphp
-                                    <tr class="border-b dark:border-gray-700">
-                                        <td class="px-4 py-3 text-gray-700 dark:text-gray-400 font-semibold">Jumlah Kriteria <span class="font-normal">(n)</span></td>
-                                        <td class="px-4 py-3 text-gray-700 dark:text-gray-400 font-semibold">
-                                            {{ $jmlKriteria }}
-                                        </td>
-                                    </tr>
-                                    <tr class="border-b dark:border-gray-700">
-                                        <td class="px-4 py-3 text-gray-700 dark:text-gray-400 font-semibold">Indeks Random Consistency (IR)</td>
-                                        <td class="px-4 py-3 text-gray-700 dark:text-gray-400 font-semibold">
-                                            {{ $IR }}
-                                        </td>
-                                    </tr>
-                                    <tr class="border-b dark:border-gray-700">
-                                        <td class="px-4 py-3 text-gray-700 dark:text-gray-400 font-semibold">λ maks <span class="font-normal">(Jumlah / n)</span></td>
-                                        <td class="px-4 py-3 text-gray-700 dark:text-gray-400 font-semibold">
-                                            {{ round($lamdaMaks1, 3) }}
-                                        </td>
-                                    </tr>
-                                    <tr class="border-b dark:border-gray-700">
-                                        <td class="px-4 py-3 text-gray-700 dark:text-gray-400 font-semibold">Nilai Consistency Index (CI) <span class="font-normal">((λ maks - n)/n)</span></td>
-                                        <td class="px-4 py-3 text-gray-700 dark:text-gray-400 font-semibold">
-                                            {{ round($CI1, 3) }}
-                                        </td>
-                                    </tr>
-                                    <tr class="border-b dark:border-gray-700">
-                                        <td class="px-4 py-3 text-gray-700 dark:text-gray-400 font-semibold">Nilai Consistency Ratio (CR) <span class="font-normal">(CI / IR)</span></td>
-                                        <td class="px-4 py-3 text-gray-700 dark:text-gray-400 font-semibold">
-                                            @if ($CI1/$IR <= 0.1)
-                                                <span class="text-success">
-                                                    {{ round($CI1/$IR, 3) }}
-                                                </span>
-                                                <i class="ri-checkbox-circle-fill ml-1 text-lg text-success"></i>
-                                            @else
-                                                <span class="text-error">
-                                                    {{ round($CI1/$IR, 3) }}
-                                                </span>
-                                                <i class="ri-close-circle-fill ml-1 text-lg text-error"></i>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th scope="col" class="px-4 py-3 dark:text-purple-300">Syarat Nilai CR</th>
-                                        <th scope="col" class="px-4 py-3 dark:text-purple-300">CR ≤ 0.1</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-
-                        {{-- Cara Cek CR 2 --}}
                         <div class="overflow-x-auto p-3 mt-3">
                             <table id="tabel_data_matriks_penjumlahan" class="nowrap w-full text-sm text-left text-gray-500 dark:text-gray-400 stripe hover" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
                                 <caption class="mb-3 text-base">Consistency Ratio: Cara 2</caption>
@@ -335,7 +269,7 @@
                                     <tr class="border-b dark:border-gray-700">
                                         <td class="px-4 py-3 text-gray-700 dark:text-gray-400 font-semibold">Nilai Consistency Ratio (CR) <span class="font-normal">(CI / IR)</span></td>
                                         <td class="px-4 py-3 text-gray-700 dark:text-gray-400 font-semibold">
-                                            @if ($CI2/$IR > 0 && $CI2/$IR < 0.001)
+                                            @if ($CI2/$IR < 0.001)
                                                 <span class="text-success">
                                                     {{ round($CI2/$IR, 3) }}
                                                 </span>

@@ -121,3 +121,59 @@
     </div>
 @endsection
 
+<!-- @section("js")
+    <script>
+        // let hasilSolusiData = [];
+        // @foreach ($hasilSolusi as $item)
+        //     hasilSolusiData.push(' {{ $item->nama_alternatif }} ');
+        // @endforeach
+
+        const lineConfig = {
+            type: 'line',
+            data: {
+                labels: hasilSolusiData,
+                datasets: [{
+                    label: 'Nilai',
+                    backgroundColor: '#0694a2',
+                    borderColor: '#0694a2',
+                    data: [{{ $hasilNilaiData }}],
+                    fill: false,
+                }, ],
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    display: false,
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true,
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Alternatif',
+                        },
+                    },
+                    y: {
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Value',
+                        },
+                    },
+                },
+            },
+        }
+
+        // change this to the id of your chart element in HMTL
+        const lineCtx = document.getElementById('line')
+        window.myLine = new Chart(lineCtx, lineConfig)
+    </script>
+@endsection -->
